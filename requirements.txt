@@ -1,0 +1,9 @@
+uvicorn
+fastapi[standard]
+typing
+pedantic
+pandas
+mysql-connector-python
+# pymongo
+# dnspython
+# mysqlclient
