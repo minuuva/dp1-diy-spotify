@@ -13,17 +13,16 @@ app = FastAPI()
 # Configure CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allows all origins; adjust as needed
-    allow_credentials=True,
+    allow_origins=["*"],
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 
-DBHOST = os.getenv('DBHOST')
-DBUSER = os.getenv('DBUSER')
+DBHOST = "ds2022.cqee4iwdcaph.us-east-1.rds.amazonaws.com"
+DBUSER = "admin"
 DBPASS = os.getenv('DBPASS')
-DB = os.getenv('DB')
+DB = "qce2dp"
 
 db = mysql.connector.connect(user=DBUSER, host=DBHOST, password=DBPASS, database=DB)
 cur=db.cursor()
@@ -38,10 +37,10 @@ def get_genres():
         json_data = []
         for result in results:
             json_data.append(dict(zip(headers, result)))
-        return json_data  # Return directly without json.dumps
+        return (json_data)
     except mysql.connector.Error as e:
-        print("MySQL Error: ", str(e))
-        return {"error": "Failed to fetch genres"}
+        return {"Error": "MySQL Error: " + str(e)}
+
 
 @app.get('/songs')
 def get_songs():
@@ -59,8 +58,7 @@ def get_songs():
         json_data = []
         for result in results:
             json_data.append(dict(zip(headers, result)))
-        return json_data  # Return directly without json.dumps
+        return (json_data)
     except mysql.connector.Error as e:
-        print("MySQL Error: ", str(e))
         return {"error": "Failed to fetch songs"}
 
